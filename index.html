@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Freight Pallet Calculator</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <img
+      src="https://treadwell.b-cdn.net/wp-content/themes/treadellcomposites2016/images/treadwell.png"
+      alt="Treadwell Logo"
+      class="logo"
+      width="200px"
+    />
+    <div id="productForm" class="main-div product-form">
+      <h3>Product Form</h3>
+      <div class="input-group">
+        <label for="width">Width:</label>
+        <div class="input-container">
+          <input
+            class="input-box"
+            type="number"
+            inputmode="numeric"
+            id="width"
+            placeholder="Ex: 110"
+          />
+          <span class="units">cm</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label for="depth">Depth:</label>
+        <div class="input-container">
+          <input
+            class="input-box"
+            type="number"
+            inputmode="numeric"
+            id="depth"
+            placeholder="Ex: 80"
+          />
+          <span class="units">cm</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label for="height">Height:</label>
+        <div class="input-container">
+          <input
+            class="input-box"
+            type="number"
+            inputmode="numeric"
+            id="height"
+            placeholder="Ex: 10"
+          />
+          <span class="units">cm</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label for="weight">Weight:</label>
+        <div class="input-container">
+          <input
+            class="input-box"
+            type="number"
+            inputmode="numeric"
+            id="weight"
+            placeholder="Ex: 20"
+          />
+          <span class="units">kg</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label for="quantity">Quantity:</label>
+        <div class="input-container">
+          <input
+            class="input-box"
+            type="number"
+            inputmode="numeric"
+            id="quantity"
+            placeholder="Ex: 10"
+          />
+        </div>
+      </div>
+      <div id="productInputError" class="error hidden">
+        * Enter a Valid value... ( > 0 )
+      </div>
+      <div class="btn-column">
+        <button class="btn" id="addProduct" onclick="addProduct()">Add</button>
+        <button class="btn" id="importProducts" onclick="importProducts()">
+          Import
+        </button>
+      </div>
+    </div>
+    <div id="productData" class="main-div product-data hidden">
+      <h3>Product Data</h3>
+      <div class="products-length-div" id="productsLengthDiv">
+        <button class="expand-btn">►</button>
+        <p id="productsLength">Total Products: 0</p>
+      </div>
+      <ul id="productList" class="product-list hidden"></ul>
+      <div class="weight-limit-div">
+        <div class="toggle-max-weight-div">
+          <label for="togglePalletMaxWeight">Weight Limit: </label>
+          <input
+            type="checkbox"
+            id="togglePalletMaxWeight"
+            onchange="togglePalletMaxWeight(this)"
+          />
+        </div>
+        <div id="palletMaxWeightDiv" class="hidden">
+          <div class="input-container">
+            <input
+              class="input-box"
+              type="number"
+              inputmode="numeric"
+              id="palletMaxWeight"
+              placeholder="Ex: 20"
+              onclick="this.select()"
+            />
+            <span class="units">kg</span>
+          </div>
+        </div>
+        <div id="palletSizeError" class="error hidden">
+          * Value must be Greater than 20kg.
+        </div>
+      </div>
+      <button class="btn" id="calculateSize" onclick="calculatePalletSize()">
+        Calculate
+      </button>
+    </div>
+    <div id="palletData" class="main-div pallet-data hidden">
+      <div id="loading" class="loading hidden">Loading.............</div>
+      <div id="palletSize" class="pallet-size hidden"></div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
