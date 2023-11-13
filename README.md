@@ -6,7 +6,7 @@
 
 > **You can try out the live demo here: [Freight Pallet Calculator](https://dhextras.github.io/freight-pallet-calc)**
 
-![Image 1](path/to/your/image1.jpg) ![Image 2](path/to/your/image2.jpg)
+ ![demo_page_1](https://github.com/dhextras/freight-pallet-calc/assets/104954857/ed76ce54-e1c7-41c4-a30d-b9b821a94049)![demo_page_2](https://github.com/dhextras/freight-pallet-calc/assets/104954857/809093f2-875e-410f-9863-0cf330fc50a5)
 
 ---
 
