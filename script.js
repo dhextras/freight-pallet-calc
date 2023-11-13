@@ -60,7 +60,7 @@ function calculatePalletSize() {
   var isValidWeight = true;
 
   if (toggleMaxWeight.checked) {
-    var tempWeight = palletMaxWeight.valueAsNumber;
+    var tempWeight = parseFloat(palletMaxWeight.value);
     isValidWeight =
       tempWeight !== NaN ? tempWeight >= minPalletMaxWeightLimit : false;
   }
@@ -333,7 +333,7 @@ function updateMinPalletMaxWeight() {
 
   for (let i = 0; i < listItems.length; i++) {
     const products = listItems[i].innerText.split(", ");
-    const weightInKg = parseInt(products[4].split(" ")[1]);
+    const weightInKg = parseFloat(products[4].split(" ")[1]);
 
     if (minPalletMaxWeightLimit < weightInKg) {
       minPalletMaxWeightLimit = weightInKg;
@@ -371,8 +371,8 @@ function togglePalletMaxWeight(element) {
 
 function handleInputErrors(errorDivId, minInputValue, watchElement) {
   const errorDiv = document.getElementById(errorDivId);
-
-  if (watchElement.valueAsNumber < minInputValue) {
+  
+  if (parseFloat(watchElement.value) < minInputValue) {
     if (minInputValue === 1) {
       watchElement.select();
     }
@@ -394,13 +394,13 @@ function generateWeightAndProducts() {
     const width = parseInt(productData[1].split(": ")[1].split("cm")[0]);
     const depth = parseInt(productData[2].split(": ")[1].split("cm")[0]);
     const height = parseInt(productData[3].split(": ")[1].split("cm")[0]);
-    const weight = parseInt(productData[4].split(": ")[1].split("kg")[0]);
+    const weight = parseFloat(productData[4].split(": ")[1].split("kg")[0]);
 
     totalWeight += weight;
     products.push({ pid, width, height, depth, weight });
   }
   const weightLimit = toggleMaxWeight.checked
-    ? palletMaxWeight.valueAsNumber
+    ? parseFloat(palletMaxWeight.value)
     : totalWeight;
 
   return {
@@ -438,7 +438,8 @@ function generatePalletsDisplay(palletsData) {
     }
 
     expandButton.textContent = "►" ;
-    const totalWeight = `Total Weight: ${pallet.totalWeight}kg`;
+    const totalWeight = Math.round((10 + parseFloat(pallet.totalWeight)) * 100 ) / 100;
+    const weight = `Total Weight: ${totalWeight}kg`;
     
     layers.appendChild(expandButton);
     layers.innerHTML += `<p>Total Layer: ${layerLength}</p>`;
@@ -446,7 +447,7 @@ function generatePalletsDisplay(palletsData) {
 
     palletInfo.innerHTML = `<h3>Pallet ${i + 1}:</h3>`;
     palletInfo.innerHTML += `<p>${ratioText}</p>`;
-    palletInfo.innerHTML += `<p>${totalWeight}</p>`;
+    palletInfo.innerHTML += `<p>${weight}</p>`;
     palletInfo.appendChild(layers);
 
     palletDiv.appendChild(palletInfo);
