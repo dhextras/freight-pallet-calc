@@ -1,3 +1,5 @@
+// main.js
+
 const loading = document.getElementById("loading");
 const palletData = document.getElementById("palletData");
 const palletSize = document.getElementById("palletSize");
@@ -15,7 +17,54 @@ let minPalletMaxWeightLimit, sortedByWidth, groupedByHeight;
 let [widthInput, depthInput, heightInput, weightInput, quantityInput] =
   productInputs;
 
-// Main functions for adding, importing and running calculation.
+// Few event listeners to handle errors and dumb user input :)
+productInputs.forEach(function (input) {
+  input.addEventListener("click", function () {
+    this.select();
+  });
+
+  input.addEventListener("input", function () {
+    handleInputErrors("productInputError", 1, input);
+  });
+});
+
+palletMaxWeight.addEventListener("input", function () {
+  handleInputErrors(
+    "palletSizeError",
+    minPalletMaxWeightLimit,
+    palletMaxWeight
+  );
+});
+
+productList.addEventListener("click", function (e) {
+  if (e.target.classList.contains("remove-btn")) {
+    e.target.parentNode.remove();
+
+    updateListItemNumbers();
+    updateListItemDisplay();
+    updateMinPalletMaxWeight();
+  }
+});
+
+palletSize.addEventListener("click", function (e) {
+  if (e.target.classList.contains("expand-btn")) {
+    const productIdListElement = e.target.nextElementSibling.nextElementSibling;
+    if (productIdListElement && productIdListElement.classList.contains("product-id-list")) {
+      productIdListElement.classList.toggle("hidden");
+      e.target.textContent = e.target.textContent === "►"  ? "▼" : "►";
+    }
+  }
+});
+
+productsLengthDiv.addEventListener("click", function (e) {
+  if (e.target.classList.contains("expand-btn")) {
+    productList.classList.toggle("hidden");
+    e.target.textContent = e.target.textContent === "►"  ? "▼" : "►" ;
+  }
+});
+
+// buttonHandler.js
+
 function addProduct() {
   const width = widthInput.value;
   const depth = depthInput.value;
@@ -90,6 +139,8 @@ function calculatePalletSize() {
     document.getElementById("palletSizeError").classList.remove("hidden");
   }
 }
+
+// calculationLogic.js
 
 function allocateProducts(weightLimit) {
   var pallets = [initializePallet(weightLimit)];
@@ -266,121 +317,61 @@ function addProductToPallet(product, pallet) {
   return { productAdded, modifiedPallet };
 }
 
-// Few event listeners to handle errors and dumb user input :)
-productInputs.forEach(function (input) {
-  input.addEventListener("click", function () {
-    this.select();
+// productHandler.js
+
+function sortProductData(products) {
+  const sortedByWidth = [...products].sort((a, b) => {
+    if (a.width === b.width) {
+      return b.depth - a.depth;
+    }
+    return b.width - a.width;
   });
 
-  input.addEventListener("input", function () {
-    handleInputErrors("productInputError", 1, input);
-  });
-});
+  const groupedByHeight = products.reduce((groups, product) => {
+    if (!groups[product.height]) {
+      groups[product.height] = [];
+    }
+    groups[product.height].push(product);
+    return groups;
+  }, {});
 
-palletMaxWeight.addEventListener("input", function () {
-  handleInputErrors(
-    "palletSizeError",
-    minPalletMaxWeightLimit,
-    palletMaxWeight
+  for (const height in groupedByHeight) {
+    groupedByHeight[height].sort((a, b) => a.depth - b.depth);
+  }
+
+  return { sortedByWidth, groupedByHeight };
+}
+
+// palletHandler.js
+
+function initializePallet(weightLimit) {
+  return {
+    productIds: [],
+    palletWidth: 0,
+    palletDepth: 0,
+    totalWeight: 0,
+    totalHeight: 0,
+    heightLimit: 110,
+    weightLimit,
+    minDepth: 110,
+    palletScalable: true,
+    layerId: 0,
+  };
+}
+
+function removeProductsByIds(pidsToRemove) {
+  sortedByWidth = sortedByWidth.filter(
+    (product) => !pidsToRemove.includes(product.pid)
   );
-});
 
-productList.addEventListener("click", function (e) {
-  if (e.target.classList.contains("remove-btn")) {
-    e.target.parentNode.remove();
-
-    updateListItemNumbers();
-    updateListItemDisplay();
-    updateMinPalletMaxWeight();
-  }
-});
-
-palletSize.addEventListener("click", function (e) {
-  if (e.target.classList.contains("expand-btn")) {
-    const productIdListElement = e.target.nextElementSibling.nextElementSibling;
-    if (productIdListElement && productIdListElement.classList.contains("product-id-list")) {
-      productIdListElement.classList.toggle("hidden");
-      e.target.textContent = e.target.textContent === "►"  ? "▼" : "►";
-    }
-  }
-});
-
-productsLengthDiv.addEventListener("click", function (e) {
-  if (e.target.classList.contains("expand-btn")) {
-    productList.classList.toggle("hidden");
-    e.target.textContent = e.target.textContent === "►"  ? "▼" : "►" ;
-  }
-});
-
-// Few Boilerplate codes to use through out the flow
-function updateListItemNumbers() {
-  const listItems = productList.getElementsByTagName("li");
-
-  for (let i = 0; i < listItems.length; i++) {
-    const listItem = listItems[i];
-    const paragraph = listItem.querySelector("p");
-
-    const textSplit = paragraph.innerText.split(/P_ID: \d+,/);
-    const productText =
-      textSplit.length > 1 ? textSplit[1] : paragraph.innerText;
-
-    paragraph.innerText = `P_ID: ${i + 1}, ${productText}`;
+  for (const height in groupedByHeight) {
+    groupedByHeight[height] = groupedByHeight[height].filter(
+      (product) => !pidsToRemove.includes(product.pid)
+    );
   }
 }
 
-function updateMinPalletMaxWeight() {
-  minPalletMaxWeightLimit = 0;
-
-  for (let i = 0; i < listItems.length; i++) {
-    const products = listItems[i].innerText.split(", ");
-    const weightInKg = parseFloat(products[4].split(" ")[1]);
-
-    if (minPalletMaxWeightLimit < weightInKg) {
-      minPalletMaxWeightLimit = weightInKg;
-      palletMaxWeight.value = weightInKg;
-
-      document.getElementById(
-        "palletSizeError"
-      ).innerHTML = `* Value must be Greater than ${weightInKg}kg.`;
-    }
-  }
-}
-
-function updateListItemDisplay() {
-  productsLength.innerHTML = `Total Products: ${listItems.length} `;
-  if (listItems.length > 0) {
-    productData.classList.remove("hidden");
-  } else {
-    palletData.classList.add("hidden");
-    productList.classList.add("hidden");
-    productData.classList.add("hidden");
-    productsLengthDiv.children[0].textContent = "►" ;
-  }
-}
-
-function togglePalletMaxWeight(element) {
-  if (element.checked) {
-    palletMaxWeightDiv.classList.remove("hidden");
-    palletMaxWeight.focus();
-    palletMaxWeight.select();
-  } else {
-    palletMaxWeightDiv.classList.add("hidden");
-    document.getElementById("palletSizeError").classList.add("hidden");
-  }
-}
-
-function handleInputErrors(errorDivId, minInputValue, watchElement) {
-  const errorDiv = document.getElementById(errorDivId);
-  
-  if (parseFloat(watchElement.value) < minInputValue) {
-    if (minInputValue === 1) {
-      watchElement.select();
-    }
-    errorDiv.classList.remove("hidden");
-  } else {
-    errorDiv.classList.add("hidden");
-  }
-}
+// dataHandler.js
 
 function generateWeightAndProducts() {
   let totalWeight = 0;
@@ -456,52 +447,73 @@ function generatePalletsDisplay(palletsData) {
   return palletsDisplay;
 }
 
-function sortProductData(products) {
-  const sortedByWidth = [...products].sort((a, b) => {
-    if (a.width === b.width) {
-      return b.depth - a.depth;
-    }
-    return b.width - a.width;
-  });
+// uiHandler.js
 
-  const groupedByHeight = products.reduce((groups, product) => {
-    if (!groups[product.height]) {
-      groups[product.height] = [];
-    }
-    groups[product.height].push(product);
-    return groups;
-  }, {});
+function updateListItemNumbers() {
+  const listItems = productList.getElementsByTagName("li");
 
-  for (const height in groupedByHeight) {
-    groupedByHeight[height].sort((a, b) => a.depth - b.depth);
+  for (let i = 0; i < listItems.length; i++) {
+    const listItem = listItems[i];
+    const paragraph = listItem.querySelector("p");
+
+    const textSplit = paragraph.innerText.split(/P_ID: \d+,/);
+    const productText =
+      textSplit.length > 1 ? textSplit[1] : paragraph.innerText;
+
+    paragraph.innerText = `P_ID: ${i + 1}, ${productText}`;
   }
-
-  return { sortedByWidth, groupedByHeight };
 }
 
-function initializePallet(weightLimit) {
-  return {
-    productIds: [],
-    palletWidth: 0,
-    palletDepth: 0,
-    totalWeight: 0,
-    totalHeight: 0,
-    heightLimit: 110,
-    weightLimit,
-    minDepth: 110,
-    palletScalable: true,
-    layerId: 0,
-  };
+function updateMinPalletMaxWeight() {
+  minPalletMaxWeightLimit = 0;
+
+  for (let i = 0; i < listItems.length; i++) {
+    const products = listItems[i].innerText.split(", ");
+    const weightInKg = parseFloat(products[4].split(" ")[1]);
+
+    if (minPalletMaxWeightLimit < weightInKg) {
+      minPalletMaxWeightLimit = weightInKg;
+      palletMaxWeight.value = weightInKg;
+
+      document.getElementById(
+        "palletSizeError"
+      ).innerHTML = `* Value must be Greater than ${weightInKg}kg.`;
+    }
+  }
 }
 
-function removeProductsByIds(pidsToRemove) {
-  sortedByWidth = sortedByWidth.filter(
-    (product) => !pidsToRemove.includes(product.pid)
-  );
+function updateListItemDisplay() {
+  productsLength.innerHTML = `Total Products: ${listItems.length} `;
+  if (listItems.length > 0) {
+    productData.classList.remove("hidden");
+  } else {
+    palletData.classList.add("hidden");
+    productList.classList.add("hidden");
+    productData.classList.add("hidden");
+    productsLengthDiv.children[0].textContent = "►" ;
+  }
+}
 
-  for (const height in groupedByHeight) {
-    groupedByHeight[height] = groupedByHeight[height].filter(
-      (product) => !pidsToRemove.includes(product.pid)
-    );
+function togglePalletMaxWeight(element) {
+  if (element.checked) {
+    palletMaxWeightDiv.classList.remove("hidden");
+    palletMaxWeight.focus();
+    palletMaxWeight.select();
+  } else {
+    palletMaxWeightDiv.classList.add("hidden");
+    document.getElementById("palletSizeError").classList.add("hidden");
+  }
+}
+
+function handleInputErrors(errorDivId, minInputValue, watchElement) {
+  const errorDiv = document.getElementById(errorDivId);
+  
+  if (parseFloat(watchElement.value) < minInputValue) {
+    if (minInputValue === 1) {
+      watchElement.select();
+    }
+    errorDiv.classList.remove("hidden");
+  } else {
+    errorDiv.classList.add("hidden");
   }
 }
