@@ -1,8 +1,8 @@
 ---
 name: Feature/Bug Pull Request
 about: Use this template for submitting pull requests related to features or bugs.
-title: '[Feature/Bug] Title'
-labels: 'enhancement', 'bug'
+title: ''
+labels: ''
 assignees: ''
 
 ---

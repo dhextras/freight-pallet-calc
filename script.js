@@ -188,11 +188,9 @@ function addProductToPallet(product, pallet) {
               palletScalable = false;
             }
           } else {
-            palletDepth = 110;
             palletScalable = false;
           }
         } else {
-          palletDepth = 110;
           palletScalable = false;
         }
       }
@@ -429,7 +427,7 @@ function generatePalletsDisplay(palletsData) {
     productIdList.classList.add("product-id-list", "hidden");
 
     const layerLength = pallet.productIds.length;
-    const ratioText = `Pallet Ratio (W x D): ${pallet.palletWidth} X ${pallet.palletDepth} cm`;
+    const ratioText = `Pallet Ratio (W x D x H): ${pallet.palletWidth} X ${pallet.palletDepth} X ${pallet.totalHeight} cm`;
 
     for (let j = 0; j < layerLength; j++) {
       const layerItem = document.createElement("li");
@@ -440,9 +438,7 @@ function generatePalletsDisplay(palletsData) {
     }
 
     expandButton.textContent = "►" ;
-
     const totalWeight = `Total Weight: ${pallet.totalWeight}kg`;
-    const totalHeight = `Total Height: ${pallet.totalHeight}cm`;
     
     layers.appendChild(expandButton);
     layers.innerHTML += `<p>Total Layer: ${layerLength}</p>`;
@@ -450,9 +446,8 @@ function generatePalletsDisplay(palletsData) {
 
     palletInfo.innerHTML = `<h3>Pallet ${i + 1}:</h3>`;
     palletInfo.innerHTML += `<p>${ratioText}</p>`;
-    palletInfo.appendChild(layers);
     palletInfo.innerHTML += `<p>${totalWeight}</p>`;
-    palletInfo.innerHTML += `<p>${totalHeight}</p>`;
+    palletInfo.appendChild(layers);
 
     palletDiv.appendChild(palletInfo);
     palletsDisplay.appendChild(palletDiv);

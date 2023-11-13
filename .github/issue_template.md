@@ -1,8 +1,8 @@
 ---
 name: Feature/Bug Report
 about: Use this template for reporting features or bugs.
-title: '[Feature/Bug] Title'
-labels: 'enhancement', 'bug'
+title: ''
+labels: ''
 assignees: ''
 
 ---
