@@ -18,8 +18,6 @@ let [widthInput, depthInput, heightInput, weightInput, quantityInput] =
   productInputs;
 
 // Few event listeners to handle errors and dumb user input :)
-// Do you know the difference between a dumb user and a normal user?
-// Yeah me neither. :D
 productInputs.forEach(function (input) {
   input.addEventListener("click", function () {
     this.select();
