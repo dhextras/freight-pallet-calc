@@ -18,6 +18,8 @@ let [widthInput, depthInput, heightInput, weightInput, quantityInput] =
   productInputs;
 
 // Few event listeners to handle errors and dumb user input :)
+// Do you know the difference between a dumb user and a normal user?
+// Yeah me neither. :D
 productInputs.forEach(function (input) {
   input.addEventListener("click", function () {
     this.select();
@@ -101,15 +103,15 @@ function addProduct() {
 function importProducts() {
   // this has to be updated if the client asked so just for the template so that we doesnt needed to implemnt this again later on.
   alert(
-    "Importing from Excel - added just as an template so that it can be added later if needed or be removed."
+    "Importing from Excel - added just as a template so that it can be added later if needed or be removed."
   );
 }
 
 function calculatePalletSize() {
-  var isValidWeight = true;
+  let isValidWeight = true;
 
   if (toggleMaxWeight.checked) {
-    var tempWeight = parseFloat(palletMaxWeight.value);
+    let tempWeight = parseFloat(palletMaxWeight.value);
     isValidWeight =
       tempWeight !== NaN ? tempWeight >= minPalletMaxWeightLimit : false;
   }
@@ -143,7 +145,7 @@ function calculatePalletSize() {
 // calculationLogic.js
 
 function allocateProducts(weightLimit) {
-  var pallets = [initializePallet(weightLimit)];
+  let pallets = [initializePallet(weightLimit)];
 
   while (sortedByWidth.length !== 0) {
     let productAllocated = false;
@@ -179,7 +181,7 @@ function allocateProducts(weightLimit) {
 }
 
 function addProductToPallet(product, pallet) {
-  var {
+  let {
     pid,
     weight: productWeight,
     depth: productDepth,
@@ -187,7 +189,7 @@ function addProductToPallet(product, pallet) {
     height: productHeight,
   } = product;
 
-  var {
+  let {
     productIds,
     palletWidth,
     palletDepth,
@@ -200,7 +202,7 @@ function addProductToPallet(product, pallet) {
     layerId,
   } = pallet;
 
-  var productAdded, modifiedPallet;
+  let productAdded, modifiedPallet;
 
   if (palletScalable) {
     if (
@@ -265,8 +267,8 @@ function addProductToPallet(product, pallet) {
 
       removeProductsByIds([pid]);
 
-      var isLayerFilled = false;
-      var currentLayerDepth = productDepth;
+      let isLayerFilled = false;
+      let currentLayerDepth = productDepth;
 
       while (!isLayerFilled) {
         const productsInHeightGroup = groupedByHeight[productHeight];
