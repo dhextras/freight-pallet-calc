@@ -382,9 +382,9 @@ function generateWeightAndProducts() {
     const productData = listItems[i].innerText.split(", ");
 
     const pid = parseInt(productData[0].split(": ")[1]);
-    const width = parseInt(productData[1].split(": ")[1].split("cm")[0]);
-    const depth = parseInt(productData[2].split(": ")[1].split("cm")[0]);
-    const height = parseInt(productData[3].split(": ")[1].split("cm")[0]);
+    const width = parseFloat(productData[1].split(": ")[1].split("cm")[0]);
+    const depth = parseFloat(productData[2].split(": ")[1].split("cm")[0]);
+    const height = parseFloat(productData[3].split(": ")[1].split("cm")[0]);
     const weight = parseFloat(productData[4].split(": ")[1].split("kg")[0]);
 
     totalWeight += weight;
