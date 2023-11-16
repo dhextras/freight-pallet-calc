@@ -1,12 +1,3 @@
----
-name: Feature/Bug Pull Request
-about: Use this template for submitting pull requests related to features or bugs.
-title: ''
-labels: ''
-assignees: ''
-
----
-
 <!--
 ⚠️ Please fill out the entire template. Failing to do so will result in automatic closure.
 📺 Video reference: link_to_brad_video.

@@ -12,7 +12,7 @@ body::-webkit-scrollbar,
 .pallet-size::-webkit-scrollbar,
 .product-list::-webkit-scrollbar,
 .product-id-list::-webkit-scrollbar,
-.product-list li::-webkit-scrollbar {
+.product-list li P::-webkit-scrollbar {
   display: none;
 }
 
@@ -154,13 +154,13 @@ label {
   align-items: center;
   border-radius: 10px;
   flex-direction: row;
-  overflow: auto hidden;
   border: 1px solid #ddd;
   box-shadow: -1px -1px 10px rgba(0, 0, 0, 0.2);
 }
 
 .product-list li p { 
   color: black;
+  overflow: auto hidden;
 }
 
 .remove-btn {
