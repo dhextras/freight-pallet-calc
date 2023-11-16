@@ -417,8 +417,11 @@ function generatePalletsDisplay(palletsData) {
     expandButton.classList.add("expand-btn");
     productIdList.classList.add("product-id-list", "hidden");
 
+    const palletWidth = Math.ceil(pallet.palletWidth);
+    const palletDepth = Math.ceil(pallet.palletDepth);
+    const totalHeight = Math.ceil(pallet.totalHeight);
+    const ratioText = `Pallet Ratio (W x D x H): ${palletWidth} X ${palletDepth} X ${totalHeight} cm`;
     const layerLength = pallet.productIds.length;
-    const ratioText = `Pallet Ratio (W x D x H): ${pallet.palletWidth} X ${pallet.palletDepth} X ${pallet.totalHeight} cm`;
 
     for (let j = 0; j < layerLength; j++) {
       const layerItem = document.createElement("li");
