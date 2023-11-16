@@ -32,7 +32,52 @@ To run this project locally, you will need a web browser. No additional software
 
 This tool efficiently calculates the optimal size for freight pallets. It allows you to enter product dimensions and weights, and then it distributes these products across pallets, ensuring that weight and height constraints are met. The tool uses intelligent algorithms to optimize the arrangement of products to minimize wasted space on pallets.
 
-> For a detailed explanation of how the calculator works and how the code achieves this, please refer to the `allocateProducts` & `addProductToPallet` Functions in the [script.js](script.js) file. You will find explanations and references to specific parts of the code, making it easier to understand the logic.
+> For a detailed explanation of how the calculator works and how the code achieves this, please refer to the `allocateProducts` & `addProductToPallet` Functions in the [calculationLogic.js](src/modules/calculationLogic.js) file. You will find explanations and references to specific parts of the code, making it easier to understand the logic.
+
+### File Structure:
+
+![structure_image](https://github.com/dhextras/freight-pallet-calc/assets/104954857/78ca3b08-f635-479b-9e96-47c457fa1767)
+
+> **Link to the Visualizer used above if you're intrested: [File-Viz](https://file-viz.glitch.me/)**
+---
+#### `buttonHandler.js`
+   - **Manages button functionalities:**
+     >- `addProduct()`: Adds products to the list
+     >- `importProducts()`: Imports data from Excel(as a placeholder)
+     >- `calculatePalletSize()`: Calculates pallet size based on Product data
+
+#### `calculationLogic.js`
+   - **Contains pallet calculation logic:**
+     >- `allocateProducts()`: Loop through Products & Pallets to Allocate Product 
+     >- `addProductToPallet()`: Add products to Pallet with minimizing waste space
+
+#### `productHandler.js`
+   - **Sort Product Data:**
+     >- `sortProductData()`: Sorts product data to be used in the calculation
+
+#### `palletHandler.js`
+   - **Manages pallet operations:**
+     >- `initializePallet()`: Initializes pallet structure
+     >- `removeProductsByIds()`: Removes products by IDs in the sortedProducts while calculation
+
+#### `dataHandler.js`
+   - **Deals with data generation and transformation:**
+     >- `generateWeightAndProducts()`: Generates weight and product data from the list
+     >- `generatePalletsDisplay()`: Creates nice looking display for pallets
+
+#### `uiHandler.js`
+   - **Manages UI-related updates:**
+     >- `updateListItemNumbers()`: Updates item numbers in the list
+     >- `updateMinPalletMaxWeight()`: Updates minimum pallet weight limit
+     >- `updateListItemDisplay()`: Updates list item display to make sure theres atleast one product
+     >- `togglePalletMaxWeight()`: Toggles pallet maximum weight display
+     >- `handleInputErrors()`: Handles input validation errors
+
+#### `domhandler.js`
+   - **Manages DOM interactions:**
+     >- `getById()`: Retrieves an element by its ID
+     >- `attachEventListeners()`: Attaches event listeners to various elements
+
 
 ## Contributing
 
