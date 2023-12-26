@@ -110,6 +110,9 @@ Thank you for contributing!
 ## Acknowledgments
 
 Thanks for using Freight Pallet Calculator!
-- GitHub user: dhextras
+- Moderator
+    - [Dhextras](github.com/dhextras)
+- Contributors
+    - [Jason Boyett](https://github.com/JasonBoyett)
 
 Feel free to contact us if you have any questions or feedback.
