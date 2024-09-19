@@ -25,7 +25,7 @@ function addProduct() {
 
   if (width >= 1 && depth >= 1 && height >= 1 && weight >= 1 && quantity >= 1) {
     getById("productInputError").classList.add("hidden");
-    const product = `W: ${width}cm, D: ${depth}cm, H: ${height}cm, M: ${weight}kg`;
+    const product = `W: ${width}mm, D: ${depth}mm, H: ${height}mm, M: ${weight}kg`;
 
     for (let i = 0; i < quantity; i++) {
       const listItem = document.createElement("li");
@@ -51,7 +51,7 @@ function addProduct() {
 function importProducts() {
   // this has to be updated if the client asked so just for the template so that we doesnt needed to implemnt this again later on.
   alert(
-    "Importing from Excel - added just as a template so that it can be added later if needed or be removed."
+    "Importing from Excel - added just as a template so that it can be added later if needed or be removed.",
   );
 }
 

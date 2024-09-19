@@ -13,7 +13,7 @@ function allocateProducts(weightLimit) {
       const pallet = pallets[i];
       const { productAdded, modifiedPallet } = addProductToPallet(
         product,
-        pallet
+        pallet,
       );
 
       if (productAdded) {
@@ -27,7 +27,7 @@ function allocateProducts(weightLimit) {
       const newPallet = initializePallet(weightLimit);
       const { productAdded, modifiedPallet } = addProductToPallet(
         product,
-        newPallet
+        newPallet,
       );
 
       if (productAdded) {
@@ -49,6 +49,7 @@ function addProductToPallet(product, pallet) {
 
   let {
     productIds,
+    layerData,
     palletWidth,
     palletDepth,
     totalWeight,
@@ -76,6 +77,14 @@ function addProductToPallet(product, pallet) {
 
       productIds.push([]);
       productIds[layerId].push(pid);
+
+      layerData.push([
+        productWidth,
+        productDepth,
+        productHeight,
+        productWeight,
+      ]);
+
       removeProductsByIds([pid]);
 
       if (palletDepth >= minDepth) {
@@ -94,6 +103,9 @@ function addProductToPallet(product, pallet) {
             totalWeight += product.weight;
             palletDepth += product.depth;
             productIds[layerId].push(product.pid);
+
+            layerData[layerId][1] += product.depth;
+            layerData[layerId][3] += product.weight;
 
             removeProductsByIds([product.pid]);
 
@@ -122,6 +134,13 @@ function addProductToPallet(product, pallet) {
       productIds.push([]);
       productIds[layerId].push(pid);
 
+      layerData.push([
+        productWidth,
+        productDepth,
+        productHeight,
+        productWeight,
+      ]);
+
       totalWeight += productWeight;
       totalHeight += productHeight;
 
@@ -148,6 +167,9 @@ function addProductToPallet(product, pallet) {
               currentLayerDepth += product.depth;
               productIds[layerId].push(product.pid);
 
+              layerData[layerId][1] += product.depth;
+              layerData[layerId][3] += product.weight;
+
               removeProductsByIds([product.pid]);
             }
           } else {
@@ -166,6 +188,7 @@ function addProductToPallet(product, pallet) {
 
   modifiedPallet = {
     productIds,
+    layerData,
     palletWidth,
     palletDepth,
     totalWeight,

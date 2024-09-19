@@ -1,4 +1,4 @@
-import { attachEventListeners } from "./modules/domHelper";
+import { attachEventListeners, capturePalletData } from "./modules/domHelper";
 import {
   addProduct,
   importProducts,
@@ -22,6 +22,7 @@ function globalVarsAccessor(variable, value = undefined) {
 
 attachEventListeners();
 window.addProduct = addProduct;
+window.capturePalletData = capturePalletData;
 window.importProducts = importProducts;
 window.handleInputErrors = handleInputErrors;
 window.calculatePalletSize = calculatePalletSize;

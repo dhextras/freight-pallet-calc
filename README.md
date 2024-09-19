@@ -26,7 +26,24 @@ To run this project locally, you will need a web browser. No additional software
    git clone https://github.com/dhextras/freight-pallet-calc.git
    ```
 
-2. Open the `index.html` file in your web browser.
+2. Run the dev server
+
+   - For dev server
+   ```shell
+   npm run dev
+   ```
+
+   - To build for prod
+   ```shell
+   npm run build
+   ```
+
+   - For preview
+   ```shell
+   npm run preview
+   ```
+
+   > you can access the app at `http://localhost:5173/freight-pallet-calc/`
 
 ## How It Works
 

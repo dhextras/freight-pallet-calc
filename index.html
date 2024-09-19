@@ -1,13 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <link rel="icon" href="https://treadwell.b-cdn.net/favicon.ico"> 
+    <link rel="icon" href="https://treadwell.b-cdn.net/favicon.ico" />
     <title>Freight Pallet Calculator</title>
     <link rel="stylesheet" type="text/css" href="src/styles/style.css" />
   </head>
   <body>
     <img
-      src="https://treadwell.b-cdn.net/wp-content/themes/treadellcomposites2016/images/treadwell.png"
+      src="https://treadwellgroup.com.au/wp-content/uploads/2023/12/treadwell.png"
       alt="Treadwell Logo"
       class="logo"
       width="200px"
@@ -22,9 +22,9 @@
             type="number"
             inputmode="numeric"
             id="width"
-            placeholder="Ex: 110"
+            placeholder="Ex: 1100"
           />
-          <span class="units">cm</span>
+          <span class="units">mm</span>
         </div>
       </div>
       <div class="input-group">
@@ -35,9 +35,9 @@
             type="number"
             inputmode="numeric"
             id="depth"
-            placeholder="Ex: 80"
+            placeholder="Ex: 800"
           />
-          <span class="units">cm</span>
+          <span class="units">mm</span>
         </div>
       </div>
       <div class="input-group">
@@ -48,9 +48,9 @@
             type="number"
             inputmode="numeric"
             id="height"
-            placeholder="Ex: 10"
+            placeholder="Ex: 100"
           />
-          <span class="units">cm</span>
+          <span class="units">mm</span>
         </div>
       </div>
       <div class="input-group">
@@ -126,7 +126,12 @@
       </button>
     </div>
     <div id="palletData" class="main-div pallet-data hidden">
-      <h3>Pallet Data</h3>
+      <div class="pallet-data-header">
+        <h3>Pallet Data</h3>
+        <button class="btn" onclick="capturePalletData()">
+          Capture Screen
+        </button>
+      </div>
       <div id="loading" class="loading hidden">Loading.............</div>
       <div id="palletSize" class="pallet-size hidden"></div>
     </div>
