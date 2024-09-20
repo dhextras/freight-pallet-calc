@@ -52,7 +52,7 @@ label {
 }
 
 .main-div {
-  width: 70vw;
+  width: 85vw;
   padding: 20px;
   border-radius: 10px;
   outline: 0.1px solid grey;
@@ -245,7 +245,7 @@ label {
 .pallet-info {
   min-width: 350px;
   max-width: 550px;
-  max-height: 400px;
+  max-height: 80vh;
   border-radius: 10px;
   overflow: hidden auto;
   border: 1px solid #ddd;
