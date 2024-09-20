@@ -1,4 +1,4 @@
-import { toPng } from "html-to-image";
+import { toJpeg } from "html-to-image";
 import { globalVarsAccessor } from "../main";
 import {
   updateListItemNumbers,
@@ -83,11 +83,11 @@ async function capturePalletData() {
   }
 
   try {
-    const blobUrl = await toPng(node, { pixelRatio: 5 });
+    const blobUrl = await toJpeg(node, { pixelRatio: 5 });
     const downloadLink = document.createElement("a");
 
     downloadLink.href = blobUrl;
-    downloadLink.download = "Pallet Data.png";
+    downloadLink.download = "Pallet Data.jpeg";
     downloadLink.click();
   } catch (error) {
     alert("Error capturing element, Contact Dev with the console log");
